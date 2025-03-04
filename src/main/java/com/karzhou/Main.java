@@ -1,17 +1,51 @@
 package com.karzhou;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import com.karzhou.entity.Bus;
+import com.karzhou.creator.BusFactory;
+import com.karzhou.service.BusService;
+import com.karzhou.validator.BusValidator;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) throws ParseException {
+        BusValidator busValidator = new BusValidator();
+        BusFactory busFactory = new BusFactory(busValidator);
+        BusService busService = new BusService();
+
+        // Создаем массив объектов Bus
+        List<Bus> buses = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        buses.add(busFactory.createBus("Ivan", "Ivanov", "AX7506-7", "12", "MAZ", dateFormat.parse("2015-05-10"), 120000));
+        buses.add(busFactory.createBus("Petr", "Petrov", "AX1234-5", "112A", "MAZ", dateFormat.parse("2010-03-15"), 200000));
+        buses.add(busFactory.createBus("Sidor", "Sidorov", "AX5678-3", "1112", "MAZ", dateFormat.parse("2018-07-20"), 80000));
+
+        // Вывод списка автобусов для заданного номера маршрута
+        String trailNumber = "12";
+        List<Bus> busesByTrail = busService.getBusesByTrail(buses, trailNumber);
+        System.out.println("Buses on route " + trailNumber + ":");
+        for (Bus bus : busesByTrail) {
+            System.out.println(bus.getBusNumber() + " - " + bus.getDriverName() + " " + bus.getDriverSurname());
+        }
+
+        // Вывод списка автобусов, которые эксплуатируются больше заданного срока
+        int operationYears = 10;
+        List<Bus> busesByOperationPeriod = busService.getBusesByOperationPeriod(buses, operationYears);
+        System.out.println("\nBuses operated more than " + operationYears + " years:");
+        for (Bus bus : busesByOperationPeriod) {
+            System.out.println(bus.getBusNumber() + " - " + bus.getDriverName() + " " + bus.getDriverSurname());
+        }
+
+        // Вывод списка автобусов, пробег у которых больше заданного расстояния
+        float mileage = 100000;
+        List<Bus> busesByMileage = busService.getBusesByMileage(buses, mileage);
+        System.out.println("\nBuses with mileage more than " + mileage + " km:");
+        for (Bus bus : busesByMileage) {
+            System.out.println(bus.getBusNumber() + " - " + bus.getDriverName() + " " + bus.getDriverSurname());
         }
     }
 }

@@ -2,6 +2,7 @@ package com.karzhou.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public class Bus {
     @NotBlank(message = "Driver surname must not be empty")
     public String driverSurname;
     @NotBlank(message = "The bus must have number")
-    @Pattern(regexp = "^[АВЕІКМНОРСТХ]{2}\\d{4}-[0-7]$", message = "The bus number must match Belarusian " +
+    @Pattern(regexp = "^[АВЕІКМНОРСТХA-Z]{2}\\d{4}-[0-7]$", message = "The bus number must match Belarusian " +
             "laws \"AX7506-7\"")
     public String busNumber;
     @NotBlank(message="The trail must not be empty")
@@ -24,7 +25,7 @@ public class Bus {
     @NotBlank(message = "The brand must not be empty")
     public String busBrand;
     public Date startOfOperation;
-    @NotBlank(message = "Mileage can not be empty")
+    @Positive(message = "Mileage can not be less than zero")
     public float mileage;
 
 //    Constructor

@@ -1,4 +1,4 @@
-package com.karzhou.factory;
+package com.karzhou.creator;
 
 import com.karzhou.entity.Bus;
 import com.karzhou.validator.BusValidator;
