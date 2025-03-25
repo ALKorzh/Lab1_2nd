@@ -3,9 +3,7 @@ package com.karzhou.entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
-
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDate;
 
 public class Bus {
     @NotBlank(message = "Driver name must not be empty")
@@ -24,7 +22,7 @@ public class Bus {
     public String trail;
     @NotBlank(message = "The brand must not be empty")
     public String busBrand;
-    public Date startOfOperation;
+    public LocalDate startOfOperation;
     @Positive(message = "Mileage can not be less than zero")
     public float mileage;
 
@@ -34,7 +32,7 @@ public class Bus {
                String busNumber,
                String trail,
                String busBrand,
-               Date startOfOperation,
+               LocalDate startOfOperation,
                float mileage) {
         this.driverName = driverName;
         this.driverSurname = driverSurname;
@@ -61,7 +59,7 @@ public class Bus {
     public void setBusBrand(String busBrand) {
         this.busBrand = busBrand;
     }
-    public void setStartOfOperation(Date startOfOperation) {
+    public void setStartOfOperation(LocalDate startOfOperation) {
         this.startOfOperation = startOfOperation;
     }
     public void setMileage(float mileage) {
@@ -84,7 +82,7 @@ public class Bus {
     public String getBusBrand() {
         return busBrand;
     }
-    public Date getStartOfOperation() {
+    public LocalDate getStartOfOperation() {
         return startOfOperation;
     }
     public float getMileage() {
@@ -94,35 +92,44 @@ public class Bus {
     // toString
     @Override
     public String toString() {
-        return "Bus{" +
-                "driverName='" + driverName + '\'' +
-                ", driverSurname='" + driverSurname + '\'' +
-                ", busNumber='" + busNumber + '\'' +
-                ", trail='" + trail + '\'' +
-                ", busBrand='" + busBrand + '\'' +
-                ", startOfOperation=" + startOfOperation +
-                ", mileage=" + mileage +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bus{")
+                .append("driverName='").append(driverName).append('\'')
+                .append(", driverSurname='").append(driverSurname).append('\'')
+                .append(", busNumber='").append(busNumber).append('\'')
+                .append(", trail='").append(trail).append('\'')
+                .append(", busBrand='").append(busBrand).append('\'')
+                .append(", startOfOperation=").append(startOfOperation)
+                .append(", mileage=").append(mileage)
+                .append('}');
+        return sb.toString();
     }
 
-    // hashCode
     @Override
     public int hashCode() {
-        return Objects.hash(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
+        int result = 17;
+        result = 31 * result + (driverName == null ? 0 : driverName.hashCode());
+        result = 31 * result + (driverSurname == null ? 0 : driverSurname.hashCode());
+        result = 31 * result + (busNumber == null ? 0 : busNumber.hashCode());
+        result = 31 * result + (trail == null ? 0 : trail.hashCode());
+        result = 31 * result + (busBrand == null ? 0 : busBrand.hashCode());
+        result = 31 * result + (startOfOperation == null ? 0 : startOfOperation.hashCode());
+        result = 31 * result + Float.floatToIntBits(mileage);
+        return result;
     }
 
-    // equals
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Bus bus = (Bus) obj;
         return Float.compare(bus.mileage, mileage) == 0 &&
-                Objects.equals(driverName, bus.driverName) &&
-                Objects.equals(driverSurname, bus.driverSurname) &&
-                Objects.equals(busNumber, bus.busNumber) &&
-                Objects.equals(trail, bus.trail) &&
-                Objects.equals(busBrand, bus.busBrand) &&
-                Objects.equals(startOfOperation, bus.startOfOperation);
+                (driverName == null ? bus.driverName == null : driverName.equals(bus.driverName)) &&
+                (driverSurname == null ? bus.driverSurname == null : driverSurname.equals(bus.driverSurname)) &&
+                (busNumber == null ? bus.busNumber == null : busNumber.equals(bus.busNumber)) &&
+                (trail == null ? bus.trail == null : trail.equals(bus.trail)) &&
+                (busBrand == null ? bus.busBrand == null : busBrand.equals(bus.busBrand)) &&
+                (startOfOperation == null ? bus.startOfOperation == null : startOfOperation.equals(bus.startOfOperation));
     }
+
 }

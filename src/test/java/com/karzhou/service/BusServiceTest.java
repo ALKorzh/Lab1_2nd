@@ -5,8 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BusServiceTest {
@@ -19,18 +19,19 @@ public class BusServiceTest {
         busService = new BusService();
         buses = new ArrayList<>();
 
-        buses.add(new Bus("John", "Doe", "AX7506-7", "12", "Mercedes", new Date(System.currentTimeMillis() - (5L * 365 * 24 * 60 * 60 * 1000)), 15000.5f));
-        buses.add(new Bus("Jane", "Smith", "AX1234-5", "112A", "Volvo", new Date(System.currentTimeMillis() - (3L * 365 * 24 * 60 * 60 * 1000)), 8000.0f));
-        buses.add(new Bus("Alice", "Johnson", "AX5678-9", "12", "Scania", new Date(System.currentTimeMillis() - (7L * 365 * 24 * 60 * 60 * 1000)), 20000.0f));
+        buses.add(new Bus("John", "Doe", "AX7506-7", "12", "Mercedes", LocalDate.now().minusYears(5), 15000.5f));
+        buses.add(new Bus("Jane", "Smith", "AX1234-5", "112A", "Volvo", LocalDate.now().minusYears(3), 8000.0f));
+        buses.add(new Bus("Alice", "Johnson", "AX5678-9", "12", "Scania", LocalDate.now().minusYears(7), 20000.0f));
+
     }
 
     @Test
-    public void testGetBusesByTrail() {
+    public void testFindBusesByTrail() {
         // Arrange
         String trail = "12";
 
         // Act
-        List<Bus> result = busService.getBusesByTrail(buses, trail);
+        List<Bus> result = busService.findBusesByTrail(buses, trail);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с маршрутом "12"
@@ -38,12 +39,12 @@ public class BusServiceTest {
     }
 
     @Test
-    public void testGetBusesByOperationPeriod() {
+    public void testFindBusesByOperationPeriod() {
         // Arrange
         int years = 4;
 
         // Act
-        List<Bus> result = busService.getBusesByOperationPeriod(buses, years);
+        List<Bus> result = busService.findBusesByOperationPeriod(buses, years);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с периодом эксплуатации больше 4 лет
@@ -51,12 +52,12 @@ public class BusServiceTest {
     }
 
     @Test
-    public void testGetBusesByMileage() {
+    public void testFindBusesByMileage() {
         // Arrange
         float mileage = 10000.0f;
 
         // Act
-        List<Bus> result = busService.getBusesByMileage(buses, mileage);
+        List<Bus> result = busService.findBusesByMileage(buses, mileage);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с пробегом больше 10000

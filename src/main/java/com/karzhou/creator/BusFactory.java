@@ -5,7 +5,8 @@ import com.karzhou.validator.BusValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class BusFactory {
 
@@ -22,7 +23,7 @@ public class BusFactory {
                          String busNumber,
                          String trail,
                          String busBrand,
-                         Date startOfOperation,
+                         LocalDate startOfOperation,
                          float mileage) {
 
         logger.debug("Creating a new Bus instance with driverName: {}, driverSurname: {}, busNumber: {}, trail: {}, busBrand: {}, startOfOperation: {}, mileage: {}",
@@ -34,8 +35,7 @@ public class BusFactory {
             busValidator.validate(bus);
             logger.info("Bus validation successful for busNumber: {}", busNumber);
         } catch (Exception e) {
-            logger.error("Bus validation failed for busNumber: {}", busNumber, e);
-            throw e;
+            logger.error("Bus validation failed : {}", bus.toString(), e);
         }
 
         logger.info("Bus created successfully: {}", bus);

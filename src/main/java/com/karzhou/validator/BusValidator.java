@@ -14,7 +14,7 @@ public class BusValidator {
     private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private static final Validator validator = factory.getValidator();
 
-    private static Logger logger = LogManager.getLogger(BusValidator.class);
+    private static final Logger logger = LogManager.getLogger(BusValidator.class);
 
     public void validate(Bus bus) {
         logger.info("Starting validation for bus: {}", bus);
