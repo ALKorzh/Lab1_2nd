@@ -6,25 +6,26 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 public class Bus {
+
     @NotBlank(message = "Driver name must not be empty")
-    public String driverName;
+    private String driverName;
     @NotBlank(message = "Driver surname must not be empty")
-    public String driverSurname;
+    private String driverSurname;
     @NotBlank(message = "The bus must have number")
-    @Pattern(regexp = "^[АВЕІКМНОРСТХA-Z]{2}\\d{4}-[0-7]$", message = "The bus number must match Belarusian " +
+    @Pattern(regexp = "^[АВЕІКМНОРСТХA-Z]{2}\\d{4}-[0-8]$", message = "The bus number must match Belarusian " +
             "laws \"AX7506-7\"")
-    public String busNumber;
+    private String busNumber;
     @NotBlank(message="The trail must not be empty")
     @Pattern(regexp = "^\\d{1,2}$|^\\d{3}[A-Z]?$|^\\d{3,4}$", message="Thee trail must match for " +
             "city: \"12\"" +
             "suburb: \"112A\"" +
             "intercity: \"1112\"")
-    public String trail;
+    private String trail;
     @NotBlank(message = "The brand must not be empty")
-    public String busBrand;
-    public LocalDate startOfOperation;
+    private String busBrand;
+    private LocalDate startOfOperation;
     @Positive(message = "Mileage can not be less than zero")
-    public float mileage;
+    private float mileage;
 
     // Constructor
     public Bus(String driverName,

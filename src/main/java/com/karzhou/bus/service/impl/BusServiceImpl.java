@@ -1,24 +1,25 @@
-package com.karzhou.bus.service;
+package com.karzhou.bus.service.impl;
 
 import com.karzhou.bus.entity.Bus;
+import com.karzhou.bus.service.BusService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class BusServiceImpl implements BusService {
-
+    private static final long MILLISECONDS_PER_YEAR = 1000L * 60 * 60 * 24 * 365;
     private static final Logger logger = LogManager.getLogger(BusServiceImpl.class);
 
     @Override
-    public List<Bus> findBusesByTrail(List<Bus> buses, String trail) { // find
+    public List<Bus> findBusesByTrail(List<Bus> buses, String trail) {
         logger.debug("Searching buses by trail: {}", trail);
 
         List<Bus> result = buses.stream()
                 .filter(bus -> bus.getTrail().equals(trail))
-                .collect(Collectors.toList());
+                .toList();
 
 
         logger.info("Found {} buses for trail: {}", result.size(), trail);
@@ -31,11 +32,11 @@ public class BusServiceImpl implements BusService {
 
         List<Bus> result = buses.stream()
                 .filter(bus -> {
-                    long diffInMillies = ChronoUnit.MILLIS.between(bus.getStartOfOperation().atStartOfDay(), LocalDate.now().atStartOfDay());
-                    long diffInYears = diffInMillies / (1000L * 60 * 60 * 24 * 365);
+                    long diffInMillis = ChronoUnit.MILLIS.between(bus.getStartOfOperation().atStartOfDay(), LocalDate.now().atStartOfDay());
+                    long diffInYears = diffInMillis / (MILLISECONDS_PER_YEAR);
                     return diffInYears > years;
                 })
-                .collect(Collectors.toList());
+                .toList();
 
 
         logger.info("Found {} buses with operation period more than {} years", result.size(), years);
@@ -48,7 +49,7 @@ public class BusServiceImpl implements BusService {
 
         List<Bus> result = buses.stream()
                 .filter(bus -> bus.getMileage() > mileage)
-                .collect(Collectors.toList());
+                .toList();
 
 
         logger.info("Found {} buses with mileage more than {} km", result.size(), mileage);

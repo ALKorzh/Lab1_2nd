@@ -1,8 +1,8 @@
 package com.karzhou.creator;
 
-import com.karzhou.bus.creator.BusFactoryImpl;
+import com.karzhou.bus.creator.impl.BusFactoryImpl;
 import com.karzhou.bus.entity.Bus;
-import com.karzhou.bus.validator.BusValidatorImpl;
+import com.karzhou.bus.validator.impl.BusValidatorImpl;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

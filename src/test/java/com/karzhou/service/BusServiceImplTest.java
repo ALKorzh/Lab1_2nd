@@ -1,7 +1,7 @@
 package com.karzhou.service;
 
 import com.karzhou.bus.entity.Bus;
-import com.karzhou.bus.service.BusServiceImpl;
+import com.karzhou.bus.service.impl.BusServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

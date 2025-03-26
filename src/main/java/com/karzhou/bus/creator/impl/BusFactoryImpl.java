@@ -1,12 +1,13 @@
-package com.karzhou.bus.creator;
+package com.karzhou.bus.creator.impl;
 
+import com.karzhou.bus.creator.BusFactory;
 import com.karzhou.bus.entity.Bus;
-import com.karzhou.bus.validator.BusValidatorImpl;
+import com.karzhou.bus.validator.impl.BusValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-
+import java.util.Map;
 
 public class BusFactoryImpl implements BusFactory {
     private static final Logger logger = LogManager.getLogger(BusFactoryImpl.class);
@@ -32,13 +33,16 @@ public class BusFactoryImpl implements BusFactory {
         Bus bus = new Bus(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
 
         try {
-            busValidatorImpl.validate(bus);
-            logger.info("Bus validation successful for busNumber: {}", busNumber);
-        } catch (Exception e) {
-            logger.error("Bus validation failed : {}", bus.toString(), e);
+            Map<String, Boolean> validationResults = busValidatorImpl.validateAttributes(bus);
+            if (!validationResults.isEmpty()){
+                throw new IllegalArgumentException(validationResults.toString());
+            };
+            logger.info("Bus validation successful: {}", bus.toString());
+        } catch (IllegalArgumentException e) {
+            logger.error("Bus validation failed : ", e);
         }
 
-        logger.info("Bus created successfully: {}", bus);
+        logger.info("Bus created successfully: {}", bus.toString());
         return bus;
     }
 }
