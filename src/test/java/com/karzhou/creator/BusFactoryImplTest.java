@@ -1,22 +1,23 @@
 package com.karzhou.creator;
 
 import com.karzhou.entity.Bus;
-import com.karzhou.validator.BusValidator;
+import com.karzhou.validator.BusValidatorImpl;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-public class BusFactoryTest {
+public class BusFactoryImplTest {
 
-    private BusFactory busFactory;
-    private BusValidator busValidator;
+    private BusFactoryImpl busFactoryImpl;
+    private BusValidatorImpl busValidatorImpl;
 
     @BeforeMethod
     public void setUp() {
-        busValidator = new BusValidator();
-        busFactory = new BusFactory(busValidator);
+        busValidatorImpl = new BusValidatorImpl();
+        busFactoryImpl = new BusFactoryImpl(busValidatorImpl);
     }
 
     @Test
@@ -27,11 +28,11 @@ public class BusFactoryTest {
         String busNumber = "AX7506-7";
         String trail = "123";
         String busBrand = "Mercedes";
-        Date startOfOperation = new Date();
+        LocalDate startOfOperation = LocalDate.now();
         float mileage = 1000.5f;
 
         // Act
-        Bus bus = busFactory.createBus(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
+        Bus bus = busFactoryImpl.createBus(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
 
         // Assert
         Assertions.assertThat(bus).isNotNull();
@@ -52,10 +53,10 @@ public class BusFactoryTest {
         String busNumber = "1234";
         String trail = "Trail123";
         String busBrand = "Mercedes";
-        Date startOfOperation = new Date();
+        LocalDate startOfOperation = LocalDate.now();
         float mileage = 1000.5f;
 
         // Act
-        busFactory.createBus(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
+        busFactoryImpl.createBus(driverName, driverSurname, busNumber, trail, busBrand, startOfOperation, mileage);
     }
 }

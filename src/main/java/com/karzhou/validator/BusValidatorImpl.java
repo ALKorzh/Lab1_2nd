@@ -10,26 +10,26 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Set;
 
-public interface BusValidator {
-    static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    static final Validator validator = factory.getValidator();
-    static final Logger logger = LogManager.getLogger(BusValidator.class);
+public class BusValidatorImpl implements BusValidator {
+    private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private static final Validator validator = factory.getValidator();
 
-    public default void validate(Object object) {
-        logger.info("Starting validation: {}", object);
+    private static final Logger logger = LogManager.getLogger(BusValidatorImpl.class);
 
-        Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object);
+    @Override
+    public void validate(Bus bus) {
+        logger.info("Starting validation for bus: {}", bus);
+
+        Set<ConstraintViolation<Bus>> constraintViolations = validator.validate(bus);
         if(!constraintViolations.isEmpty()){
             StringBuilder errorMessage = new StringBuilder("Validation Failed: ");
-            for (ConstraintViolation<Object> constraintViolation : constraintViolations) {
+            for (ConstraintViolation<Bus> constraintViolation : constraintViolations) {
                 errorMessage.append(constraintViolation.getMessage());
                 logger.warn("Validation error: {}", constraintViolation.getMessage());
             }
             logger.error("Validation failed with errors: {}", errorMessage);
             throw new IllegalArgumentException(errorMessage.toString());
         }
-        logger.info("Validation successful: {}", object);
+        logger.info("Validation successful for bus: {}", bus);
     }
-
-    void validate(Bus bus);
 }

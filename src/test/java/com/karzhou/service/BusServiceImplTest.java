@@ -9,14 +9,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BusServiceTest {
+public class BusServiceImplTest {
 
-    private BusService busService;
+    private BusServiceImpl busServiceImpl;
     private List<Bus> buses;
 
     @BeforeMethod
     public void setUp() {
-        busService = new BusService();
+        busServiceImpl = new BusServiceImpl();
         buses = new ArrayList<>();
 
         buses.add(new Bus("John", "Doe", "AX7506-7", "12", "Mercedes", LocalDate.now().minusYears(5), 15000.5f));
@@ -31,7 +31,7 @@ public class BusServiceTest {
         String trail = "12";
 
         // Act
-        List<Bus> result = busService.findBusesByTrail(buses, trail);
+        List<Bus> result = busServiceImpl.findBusesByTrail(buses, trail);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с маршрутом "12"
@@ -44,7 +44,7 @@ public class BusServiceTest {
         int years = 4;
 
         // Act
-        List<Bus> result = busService.findBusesByOperationPeriod(buses, years);
+        List<Bus> result = busServiceImpl.findBusesByOperationPeriod(buses, years);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с периодом эксплуатации больше 4 лет
@@ -57,7 +57,7 @@ public class BusServiceTest {
         float mileage = 10000.0f;
 
         // Act
-        List<Bus> result = busService.findBusesByMileage(buses, mileage);
+        List<Bus> result = busServiceImpl.findBusesByMileage(buses, mileage);
 
         // Assert
         Assertions.assertThat(result).hasSize(2); // Ожидаем 2 автобуса с пробегом больше 10000
