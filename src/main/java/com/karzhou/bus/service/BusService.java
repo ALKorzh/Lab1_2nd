@@ -1,6 +1,6 @@
-package com.karzhou.service;
+package com.karzhou.bus.service;
 
-import com.karzhou.entity.Bus;
+import com.karzhou.bus.entity.Bus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

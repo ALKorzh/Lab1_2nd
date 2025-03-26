@@ -1,7 +1,7 @@
-package com.karzhou.creator;
+package com.karzhou.bus.creator;
 
-import com.karzhou.entity.Bus;
-import com.karzhou.validator.BusValidatorImpl;
+import com.karzhou.bus.entity.Bus;
+import com.karzhou.bus.validator.BusValidatorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

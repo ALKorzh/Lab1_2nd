@@ -1,4 +1,4 @@
-package com.karzhou.entity;
+package com.karzhou.bus.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

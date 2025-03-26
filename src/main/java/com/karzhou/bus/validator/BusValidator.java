@@ -1,6 +1,6 @@
-package com.karzhou.validator;
+package com.karzhou.bus.validator;
 
-import com.karzhou.entity.Bus;
+import com.karzhou.bus.entity.Bus;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

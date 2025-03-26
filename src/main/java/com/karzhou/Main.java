@@ -1,9 +1,9 @@
 package com.karzhou;
 
-import com.karzhou.entity.Bus;
-import com.karzhou.creator.BusFactoryImpl;
-import com.karzhou.service.BusServiceImpl;
-import com.karzhou.validator.BusValidatorImpl;
+import com.karzhou.bus.entity.Bus;
+import com.karzhou.bus.creator.BusFactoryImpl;
+import com.karzhou.bus.service.BusServiceImpl;
+import com.karzhou.bus.validator.BusValidatorImpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
