@@ -4,26 +4,54 @@ import com.karzhou.bus.entity.Bus;
 import com.karzhou.bus.creator.impl.BusFactoryImpl;
 import com.karzhou.bus.service.impl.BusServiceImpl;
 import com.karzhou.bus.validator.impl.BusValidatorImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
+        Logger logger = (Logger) LogManager.getLogger(Main.class);
         BusValidatorImpl busValidatorImpl = new BusValidatorImpl();
         BusFactoryImpl busFactoryImpl = new BusFactoryImpl(busValidatorImpl);
         BusServiceImpl busServiceImpl = new BusServiceImpl();
 
-        // Создаем массив объектов Bus
         List<Bus> buses = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        buses.add(busFactoryImpl.createBus("Ivan", "Ivanov", "AX7506-7", "12", "MAZ", LocalDate.parse("2015-05-10"), 120000));
-        buses.add(busFactoryImpl.createBus("Petr", "Petrov", "AX1234-5", "112A", "MAZ", LocalDate.parse("2010-03-15"), 200000));
-        buses.add(busFactoryImpl.createBus("Sidor", "Sidorov", "AX5678-3", "1112", "MAZ", LocalDate.parse("2018-07-20"), 80000));
+
+
+        Optional<Bus> bus1 = busFactoryImpl.createBus("Ivan", "Ivanov", "AX7506-7", "12", "MAZ", LocalDate.parse("2015-05-10"), 120000);
+        bus1.ifPresentOrElse(
+                bus -> {
+                    buses.add(bus);
+                    logger.info("Bus created successfully: {}", bus);
+                },
+                () -> logger.warn("Bus creation failed due to validation errors")
+        );
+
+        Optional<Bus> bus2 = busFactoryImpl.createBus("Sidor", "Sidorov", "AX5678-3", "1112", "MAZ", LocalDate.parse("2018-07-20"), 80000);
+        bus2.ifPresentOrElse(
+                bus -> {
+                    buses.add(bus);
+                    logger.info("Bus created successfully: {}", bus);
+                },
+                () -> logger.warn("Bus creation failed due to validation errors")
+        );
+
+        Optional<Bus> bus3 = busFactoryImpl.createBus("Petr", "Petrov", "AX1234-5", "112A", "MAZ", LocalDate.parse("2010-03-15"), 200000);
+        bus3.ifPresentOrElse(
+                bus -> {
+                    buses.add(bus);
+                    logger.info("Bus created successfully: {}", bus);
+                },
+                () -> logger.warn("Bus creation failed due to validation errors")
+        );
 
         // Вывод списка автобусов для заданного номера маршрута
         String trailNumber = "12";
